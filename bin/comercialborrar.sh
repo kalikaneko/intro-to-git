@@ -23,30 +23,30 @@
 #Borrar comerciales
    #!/bin/sh
 
-usuario=`whoami`
+        FILE=`zenity --file-selection --title="Seleccione el archivo del comercial a borrar"`
 
-       comborrar=`zenity --filename=/home/$usuario/Guarango\ Radio/comerciales/ --file-selection --title="Seleccione el archivo de audio a ser borrado"` 
+        case $? in
+                 0)
+                        echo "\"$FILE\" seleccionado.";;
+                 1)
+                        echo "No ha seleccionado ningún archivo.";;
+                -1)
+                        echo "No ha seleccionado ningún archivo.";;
+        esac
 
 
-#        comborrar=`zenity --file-selection --title="Seleccione el archivo del comercial a borrar"`
+comborrar=$FILE
+#echo este es el comercial a borrar $comborrar
 
-#        case $? in
-#                 0)
-#                        echo "\"$comborrar\" seleccionado.";;
-#                 1)
-#                        echo "No ha seleccionado ningún archivo.";;
-#                -1)
-#                        echo "No ha seleccionado ningún archivo.";;
-#        esac
+#echo filtro es `grep -li "$comborrar" ~/.guarangoradio-shell/data/comerciales/*/*.com`
 
-if [ $? = 0 ]; then
-	comborrar=`echo "$comborrar"|sed s/"\/"/'\\\\\/'/g`
-	echo "comborrar" "$comborrar"
-	for i in `grep -li "$comborrar" ~/.guarangoradio/data/comerciales/*/*.com`
-	do
-	sed -i /"$comborrar"/d `echo $i`
-	echo "i" $i
-	done
-fi
-#~/.guarangoradio/bin/guarango-gui.sh
+for i in `grep -li "$comborrar" ~/.guarangoradio-shell/data/comerciales/*/*.com`
+do
+linea=`grep -in "$comborrar" $i | sed -n 's/^\([0-9]*\)[:].*/\1/p'`
+d=d
+mised="sed $linea$d $i"
+$mised > $i
+done
+
+~/.guarangoradio-shell/bin/guarango-gui.sh
 

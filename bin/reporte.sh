@@ -21,186 +21,145 @@
  
 #Reporte de Emisiones
 
-# Establece el editor a usar
-if [ -f /usr/bin/pluma ]
-then
-        EDITOR="pluma"
-else
-        if [ -f /usr/bin/leafpad ]
-        then
-                EDITOR="leafpad"
-        else
-                EDITOR="gedit"
-        fi
-fi
+opcion=$(dialog --stdout --checklist  "Reporte de emisiones GR" 50 40 40 1 "Comerciales" off 2 "Parrilla" off)
+opcion=`echo $opcion|sed 's/\"//g'`
 
-	opcion=`/usr/bin/zenity --title="Reporte de emisiones Guarango Radio" --width=400 --height=300 \
-                         --text="Puede emitir reportes de comerciales ó de la parrilla" \
-                         --list --column="Reporte" --column="Seleccione" \
-                         --radiolist TRUE "Comerciales" FALSE "Parrilla" `
-
-if [ $? -eq 0 ]; then
+        for opcion in $opcion
+        do
+               if [ "$opcion" = "1" ];
+                     then 
+                      opcion="Comerciales"
+               elif [ "$opcion" = "2" ]
+                     then
+                      opcion="Parrilla"
+		fi
+	done
+	
 	 
 	Y=`date +%Y`
 	YP=$(($Y-1))
 	YN=$(($Y+1)) 
-	anio=`/usr/bin/zenity --title="Reporte de emisiones Guarango Radio" --width=400 --height=200 \
-		                 --text="Selecciones el o los años" \
-		                 --list --column="Reporte" --column="Seleccione" \
-				 --multiple \
-		                 --checklist FALSE "$YP" TRUE "$Y" FALSE "$YN" `
 
-
-				if [ $? -eq 0 ]
-				then
-					IFS="|"
+anio=$(dialog --stdout --checklist  "Seleccione el Año" 50 40 40 1 "$YP" off 2 "$Y" on 3 "$YN" off )
+anio=`echo $anio|sed 's/\"//g'`
+echo $anio
 					for anio in $anio
 					do
-						if [ "$anio" = $YP ];
+						if [ "$anio" = "1" ];
 						     then 
 						     A[0]=$YP
 
-						elif [ "$anio" = $Y ];
+						elif [ "$anio" = "2" ];
 						     then 
 						     A[1]=$Y
 
-						elif [ "$anio" = $YN ];
+						elif [ "$anio" = "3" ];
 						     then 
 						     A[2]=$YN		
 					       fi
 					done
-				else
-				exit 0
-				fi
+				
 	###
-	mes=`/usr/bin/zenity --title="Reporte de emisiones Guarango Radio" --width=400 --height=450 \
-		                 --text="Ingrese el o los meses" \
-		                 --list --column="Puede Seleccionar mas de un rango" --column="Rango de Hora" \
-		                 --multiple \
-				 --checklist FALSE "Enero" FALSE "Febrero" FALSE "Marzo" FALSE "Abril" FALSE "Mayo" FALSE "Junio" FALSE "Julio" FALSE "Agosto" FALSE "Septiembre" FALSE "Octubre" FALSE "Noviembre" FALSE "Diciembre" `
+#echo "a0"${A[0]} "a1"${A[1]} "a2"${A[2]}
+
+mes=$(dialog --stdout --checklist  "Seleccione el Año" 50 40 40 1 "Enero" off 2 "Febrero" off 3 "Marzo" off 4 "Abril" off 5 "Mayo" off 6 "Junio" off 7 "Julio" off 8 "Agosto" off 9 "Septiembre" off 10 "Octubre" off 11 "Noviembre" off 12 "Diciembre" off )
+
+mes=`echo $mes|sed 's/\"//g'`
 	 
-	 
-	if [ $? -eq 0 ]
-	then
-		IFS="|"
+
 		for mes in $mes
 		do
-		       if [ "$mes" = "Enero" ];
+		       if [ "$mes" = "1" ];
 		             then 
 		              rango[1]=01
-		       elif [ "$mes" = "Febrero" ]
+		       elif [ "$mes" = "2" ]
 		             then
 		              rango[2]=02
 		      
-		       elif [ "$mes" = "Marzo" ]
+		       elif [ "$mes" = "3" ]
 		             then
 		              rango[3]=03
 	 
-		       elif [ "$mes" = "Abril" ]
+		       elif [ "$mes" = "4" ]
 		             then
 		              rango[4]=04
 
-		       elif [ "$mes" = "Mayo" ]
+		       elif [ "$mes" = "5" ]
 		             then
 		              rango[5]=05
 
-		       elif [ "$mes" = "Junio" ]
+		       elif [ "$mes" = "6" ]
 		             then
 		              rango[6]=06
 
-		       elif [ "$mes" = "Julio" ]
+		       elif [ "$mes" = "7" ]
 		             then
 		              rango[7]=07
 
-		       elif [ "$mes" = "Agosto" ]
+		       elif [ "$mes" = "8" ]
 		             then
 		              rango[8]=08
 
-		       elif [ "$mes" = "Septiembre" ]
+		       elif [ "$mes" = "9" ]
 		             then
 		              rango[9]=09
 
-		       elif [ "$mes" = "Octubre" ]
+		       elif [ "$mes" = "10" ]
 		             then
 		              rango[10]=10
 
-		       elif [ "$mes" = "Noviembre" ]
+		       elif [ "$mes" = "11" ]
 		             then
 		              rango[11]=11
 
-		       elif [ "$mes" = "Diciembre" ]
+		       elif [ "$mes" = "12" ]
 		             then
 		              rango[12]=12              
 
 		       fi
 		done
-		IFS=""	
-	else
-	exit 0       
-	fi
 	###
 
 #Reporte de comerciales 
 if [ $opcion = Comerciales ]; then
-buscar=`zenity --entry --text="Introduzca parte del nombre del comercial a buscar" --title="Reporte de comerciales"`
+buscar=$(dialog --stdout --inputbox "Ingrese parte del nombre del comercial" 10 30)
+
 ###
 #Generación del archivo comerciales.txt
-#2014-16-08-19:29, /home/cescobar/Guarango Radio/comerciales/GPN/GADPN - PROGRAMACION FERIA CACAO.mp3, 69 segundos
-archivo=~/.guarangoradio/data/reportes/reporte-`date +%Y-%h-%Hh%Mm.txt`
+archivo=~/.guarangoradio-shell/data/reporte/reporte-`date +%Y-%h-%Hh%Mm.txt`
 touch $archivo 
 ii=0
 while [ $ii -le 2 ]; do
 jj=1
 while [ $jj -le 12 ]; do
-
-if [[ "${A[$ii]}" != "" && "${rango[$jj]}" != "" ]]; then
-echo "====================  Reporte del Mes" ${rango[$jj]} "=====================" >> $archivo
-echo "" >> $archivo
-fi
-diames=1
-while [ $diames -le 31 ]; do
-echo "A($ii)" ${A[$ii]} "rango($jj)" ${rango[$jj]}
-if [[ "${A[$ii]}" != "" && "${rango[$jj]}" != "" ]]; then
-if [[ $diames -lt 10 ]]; then 
-diames=`echo $diames|sed  s/^/0/g`
-fi
-echo "Fecha:"  ${A[$ii]}"-"${rango[$jj]}"-"$diames   >> $archivo
-filtro=${A[$ii]}-$diames-${rango[$jj]}-
-grep -h -i "$buscar" ~/.guarangoradio/data/reporte/comercial-${A[$ii]}-$diames-${rango[$jj]}.txt|sed  s/"$filtro"//g >> $archivo
-echo "" >> $archivo
-echo "" >> $archivo
-fi
-diames=`echo $diames|sed  s/^0//g`
-diames=$(($diames+1))
-done
+grep -i "$buscar" ~/.guarangoradio-shell/data/reporte/comercial-${A[$ii]}-??-${rango[$jj]}.txt >> $archivo
 jj=$(($jj+1))
 done
 ii=$(($ii+1))
 done
-$EDITOR $archivo		
+cat $archivo > ~/reporte.txt		
+clear
+cat ~/reporte.txt
 fi 
 
 #Reporte de parrilla 
 if [ $opcion = Parrilla ]; then
-buscar=`zenity --entry --text="Introduzca parte del nombre del audio de la parrilla a buscar" --title="Reporte de parrilla"`
+buscar=$(dialog --stdout --inputbox "Ingrese parte del nombre del audio" 10 30)
 ###
 #Generación del archivo parrilla-emitida.txt
-archivo=~/.guarangoradio/data/reporte/parrilla-emitida-`date +%Y-%h-%Hh%Mm.txt`
+archivo=~/.guarangoradio-shell/data/reporte/parrilla-emitida-`date +%Y-%h-%Hh%Mm.txt`
 touch $archivo
 ii=0
 while [ $ii -le 2 ]; do
 jj=1
 while [ $jj -le 12 ]; do
-grep -h -i "$buscar" ~/.guarangoradio/data/reporte/parrilla-${A[$ii]}-??-${rango[$jj]}.txt >> $archivo
+grep -i "$buscar" ~/.guarangoradio-shell/data/reporte/parrilla-${A[$ii]}-??-${rango[$jj]}.txt >> $archivo
 jj=$(($jj+1))
 done
 ii=$(($ii+1))
 done
-$EDITOR $archivo		
+cat $archivo > ~/reporte.txt		
+clear
+cat ~/reporte.txt	
 fi 
-#~/.guarangoradio/bin/guarango-gui.sh
-
-else
-exit 0
-fi
-
+~/.guarangoradio-shell/bin/guarango-gui.sh

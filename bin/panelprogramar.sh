@@ -21,175 +21,77 @@
 ############################################################################# 
 
 #Interfaz gráfica para guarango radio - programar panel de efectos
- 
-opcion=`/usr/bin/zenity --title="Guarango Radio" --width=280 --height=350 \
-                         --text="Programar El Panel de Efectos " \
-                         --list --column="Selección" --column="Programar" \
-                         --checklist FALSE "Programar Efecto 1" FALSE "Programar Efecto 2" FALSE "Programar Efecto 3" FALSE "Programar Efecto 4" FALSE "Programar Efecto 5" FALSE "Programar Efecto 6" FALSE "Programar Efecto 7" FALSE "Programar Efecto 8" FALSE "Programar Efecto 9" FALSE "Programar Efecto 10" FALSE "Volver al Panel de Efectos" `
- 
- 
-if [ $? -eq 0 ]
-then
-        IFS="|"
+
+opcion=$(dialog --stdout --checklist  "GR Programar Efectos" 50 50 60 1 "Programar Efecto 1" off 2 "Programar Efecto 2" off 3 "Programar Efecto 3" off 4 "Programar Efecto 4" off 5 "Programar Efecto 5" off 6 "Progrmar Efecto 6" off 7 "Efecto 7" off 8 "Efecto 8" off 9 "Efecto 9" off 10 "Efecto 10" off 11 "Volver al Panel de Efectos" off)
+opcion=`echo $opcion|sed 's/\"//g'`
+
         for opcion in $opcion
         do
-               if [ "$opcion" = "Programar Efecto 1" ];
+               if [ "$opcion" = "1" ];
                      then 
-      efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto1.sh
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+               echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto1.sh 
 
-               elif [ "$opcion" = "Programar Efecto 2" ]
+               elif [ "$opcion" = "2" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
-
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto2.sh
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+               echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto2.sh
                    
-               elif [ "$opcion" = "Programar Efecto 3" ]
+               elif [ "$opcion" = "3" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto3.sh
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto3.sh
-
-               elif [ "$opcion" = "Programar Efecto 4" ]
+               elif [ "$opcion" = "4" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0  14 48)
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto4.sh
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto4.sh
 
-               elif [ "$opcion" = "Programar Efecto 5" ]
+               elif [ "$opcion" = "5" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto5.sh
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto5.sh
-
-               elif [ "$opcion" = "Programar Efecto 6" ]
+               elif [ "$opcion" = "6" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto6.sh
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto6.sh
-
-               elif [ "$opcion" = "Programar Efecto 7" ]
+               elif [ "$opcion" = "7" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto7.sh
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto7.sh
-
-               elif [ "$opcion" = "Programar Efecto 8" ]
+               elif [ "$opcion" = "8" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto8.sh
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto8.sh
+               elif [ "$opcion" = "9" ]
+                     then
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto9sh
 
-               elif [ "$opcion" = "Programar Efecto 9" ]
+               elif [ "$opcion" = "10" ]
                      then
 
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
+efecto=$(dialog --stdout --title "Seleccione el archivo de audio a ser programado como efecto" --fselect $HOME/ 0 14 48)
+                 echo "mpg321 \"$efecto\"" > ~/.guarangoradio-shell/data/panel/efecto10.sh
 
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto9sh
 
-               elif [ "$opcion" = "Programar Efecto 10" ]
+               elif [ "$opcion" = "11" ]
                      then
-
- efecto=`zenity --filename="~/Música/" --file-selection --title="Seleccione el archivo de audio a ser programado como efecto"` 
-
-        case $? in
-                 0)
-                        echo "\"$efecto\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-        esac
-                 echo "gmplayer \"$efecto\"" > ~/.guarangoradio/data/panel/efecto10.sh
-
-
-
-               elif [ "$opcion" = "Volver al Panel de Efectos" ]
-                     then
-                      ~/.guarangoradio/data/panel.sh
+                      ~/.guarangoradio-shell/bin/panel.sh
 
                fi
         done
-        IFS=""
-       
-fi
+

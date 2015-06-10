@@ -22,224 +22,165 @@
 
 #Programar la parrilla de música por horas
 
-if [[ -s ~/.guarangoradio/bin/Parrilla_GR.gambas ]]; then
+opcion=$(dialog --stdout --checklist  "Seleccione los días de programación" 50 40 40 1 lunes on 2 martes on 3 miércoles on 4 jueves on 5 viernes on 6 sábado off 7 domingo off)
 
-~/.guarangoradio/bin/Parrilla_GR.gambas
+opcion=`echo $opcion|sed 's/\"//g'`
 
-else
-
-opcion=`/usr/bin/zenity --title="Creación de Parrilla Guarango Radio" --width=400 --height=300 \
-                         --text="Seleccione el día" \
-                         --list --column="Puede seleccionar mas de un día" --column="Día" \
-			 --multiple \
-                         --checklist FALSE "Lunes" FALSE "Martes" FALSE "Miércoles" FALSE "Jueves" FALSE "Viernes" FALSE "Sábado" FALSE "Domingo" `
- 
- 
-if [ $? -eq 0 ]
-then
-        IFS="|"
         for opcion in $opcion
         do
-               if [ "$opcion" = "Lunes" ];
+               if [ "$opcion" = "1" ];
                      then 
                       dia[1]=1
-               elif [ "$opcion" = "Martes" ]
+               elif [ "$opcion" = "2" ]
                      then
                       dia[2]=1
-              elif [ "$opcion" = "Miércoles" ]
+              elif [ "$opcion" = "3" ]
                      then
                       dia[3]=1
                      
-             elif [ "$opcion" = "Jueves" ]
+             elif [ "$opcion" = "4" ]
                      then
                       dia[4]=1
 
-	     elif [ "$opcion" = "Viernes" ]
+	     elif [ "$opcion" = "5" ]
                      then
                       dia[5]=1
 
-	     elif [ "$opcion" = "Sábado" ]
+	     elif [ "$opcion" = "6" ]
                      then
                       dia[6]=1
  
-	     elif [ "$opcion" = "Domingo" ]
+	     elif [ "$opcion" = "7" ]
                      then
                       dia[7]=1
  
  
                fi
         done
-        IFS=""
-else	
-exit
-       
-fi
 
-opcion=`/usr/bin/zenity --title="Creación de Parrilla Guarango Radio" --width=400 --height=600 \
-                         --text="Seleccione el rango de la hora" \
-                         --list --column="Puede Seleccionar mas de un rango" --column="Rango de Hora" \
-                         --multiple \
-			 --checklist FALSE "00-01" FALSE "01-02" FALSE "02-03" FALSE "03-04" FALSE "04-05" FALSE "05-06" FALSE "06-07" FALSE "07-08" FALSE "08-09" FALSE "09-10" FALSE "10-11" FALSE "11-12" FALSE "12-13" FALSE "13-14" FALSE "14-15" FALSE "15-16" FALSE "16-17" FALSE "17-18" FALSE "18-19" FALSE "19-20" FALSE "20-21" FALSE "21-22" FALSE "22-23" FALSE "23-24" `
- 
- 
-if [ $? -eq 0 ]
-then
-        IFS="|"
+opcion=$(dialog --stdout --checklist  "Sleccione la Horas a Programar" 50 40 60 0 00-01 off 1 01-02 off 2 02-03 off 3 03-04 off 4 04-05 off 5 05-06 off 6 06-08 off 7 07-08 off 8 08-09 off 9 09-10 off 10 10-11 off 11 11-12 off 12 12-13 off 13 13-14 off 14 14-15 off 15 15-16 off 16 16-17 off 17 17-18 off 18 18-19 off 19 19-20 off 20 20-21 off 21 21-22 off 22 22-23 off 23 23-00 off)
+
+opcion=`echo $opcion|sed 's/\"//g'`
+
+
         for opcion in $opcion
         do
-               if [ "$opcion" = "00-01" ];
+               if [ "$opcion" = "0" ];
                      then 
                       rango[0]=1
-               elif [ "$opcion" = "01-02" ]
+               elif [ "$opcion" = "1" ]
                      then
                       rango[1]=1
               
-               elif [ "$opcion" = "02-03" ]
+               elif [ "$opcion" = "2" ]
                      then
                       rango[2]=1
  
-               elif [ "$opcion" = "03-04" ]
+               elif [ "$opcion" = "3" ]
                      then
                       rango[3]=1
 
-               elif [ "$opcion" = "04-05" ]
+               elif [ "$opcion" = "4" ]
                      then
                       rango[4]=1
 
-               elif [ "$opcion" = "05-06" ]
+               elif [ "$opcion" = "5" ]
                      then
                       rango[5]=1
 
-               elif [ "$opcion" = "06-07" ]
+               elif [ "$opcion" = "6" ]
                      then
                       rango[6]=1
 
-               elif [ "$opcion" = "07-08" ]
+               elif [ "$opcion" = "7" ]
                      then
                       rango[7]=1
 
-               elif [ "$opcion" = "08-09" ]
+               elif [ "$opcion" = "8" ]
                      then
                       rango[8]=1
 
-               elif [ "$opcion" = "09-10" ]
+               elif [ "$opcion" = "9" ]
                      then
                       rango[9]=1
 
-               elif [ "$opcion" = "10-11" ]
+               elif [ "$opcion" = "10" ]
                      then
                       rango[10]=1
 
-               elif [ "$opcion" = "11-12" ]
+               elif [ "$opcion" = "11" ]
                      then
                       rango[11]=1
 
-               elif [ "$opcion" = "12-13" ]
+               elif [ "$opcion" = "12" ]
                      then
                       rango[12]=1
 
-               elif [ "$opcion" = "13-14" ]
+               elif [ "$opcion" = "13" ]
                      then
                       rango[13]=1
                
-               elif [ "$opcion" = "14-15" ]
+               elif [ "$opcion" = "14" ]
                      then
                       rango[14]=1
 
-               elif [ "$opcion" = "15-16" ]
+               elif [ "$opcion" = "15" ]
                      then
                       rango[15]=1
 
-               elif [ "$opcion" = "16-17" ]
+               elif [ "$opcion" = "16" ]
                      then
                       rango[16]=1
 
-               elif [ "$opcion" = "17-18" ]
+               elif [ "$opcion" = "17" ]
                      then
                       rango[17]=1
 
-               elif [ "$opcion" = "18-19" ]
+               elif [ "$opcion" = "18" ]
                      then
                       rango[18]=1
 
-               elif [ "$opcion" = "19-20" ]
+               elif [ "$opcion" = "19" ]
                      then
                       rango[19]=1
 
-               elif [ "$opcion" = "20-21" ]
+               elif [ "$opcion" = "20" ]
                      then
                       rango[20]=1
 
-               elif [ "$opcion" = "21-22" ]
+               elif [ "$opcion" = "21" ]
                      then
                       rango[21]=1
 
-               elif [ "$opcion" = "22-23" ]
+               elif [ "$opcion" = "22" ]
                      then
                       rango[22]=1
 
-               elif [ "$opcion" = "23-24" ]
+               elif [ "$opcion" = "23" ]
                      then
                       rango[23]=1
 
                fi
         done
-        IFS=""
-    
-else
-exit
-fi
+
+
 
 listo=0
-         while [  $listo -ne 1000 ]; do
+         
 
-usuario=`whoami`
+while [  $listo -ne 1000 ]; do
 
-       dir=`zenity --filename=/home/$usuario/Guarango\ Radio/musica/ --file-selection --directory --title="Seleccione una Carpeta de audios para reproducir aleatoriamente"` 
+dir=$(dialog --stdout --title "Seleccione una Carpeta de audios para reproducir aleatoriamente" --dselect $HOME/ 0 14 48)
+
+#Insertar hora
+dialog --stdout --title "Parrilla GR" --backtitle "Insertar Hora" --yesno "Desea insertar la hora en la lista?" 7 60
+#opcion=`echo $opcion|sed 's/\"//g'` 
 
 if [ $? -eq 0 ]
 then
-        case $? in
-                 0)
-                        echo "\"$dir\" seleccionado.";;
-                 1)
-                        echo "No ha seleccionado ningún archivo.";;
-                -1)
-                        echo "No ha seleccionado ningún archivo.";;
-		
-        esac
-else
-exit
+hora="Si"
 fi
-################
 
-######
-
-			#Insertar hora
-				hora=`/usr/bin/zenity --title="Creación de Parrilla Guarango Radio" --width=200 --height=200 \
-						 --text="Desea insertar reproducción de hora?" \
-						 --list --column="Seleccionar" --column="Marque la casilla" \
-						 --checklist FALSE "Si" FALSE "No" `
-
-			if [ $? -eq 0 ]
-			then
-				IFS="|"
-				for hora in $hora
-				do
-				       if [ "$hora" = "Si" ];
-					     then 
-					     echo Hora Seleccionada
-
-				       elif [ "$hora" = "No" ];
-					     then 
-					     echo Hora No seleccionada
-
-		
-				       fi
-				done
-			else
-			exit
-			fi
 			
 			#Fin insertar hora
 					
@@ -257,19 +198,19 @@ i=1
 					if [[ ${dia[$i]} -eq "1" ]]; then
 						if [[  ${rango[$j]} -eq "1" ]]; then
 						rangoc=$j-$(($j+1))
-						echo dia $i rango $rangoc horazenity $hora
+						echo dia $i rango $rangoc horadialog $hora
 
 							if [ $listo = 0 ]; then
-								echo $dir"/*" > ~/.guarangoradio/data/parrilla/$i/$rangoc.mus		
+								echo $dir"/*" > ~/.guarangoradio-shell/data/parrilla/$i/$rangoc.mus		
 							   else
-								echo $dir"/*" >> ~/.guarangoradio/data/parrilla/$i/$rangoc.mus
+								echo $dir"/*" >> ~/.guarangoradio-shell/data/parrilla/$i/$rangoc.mus
 							fi
 							
 							if [ $hora = "Si" ]; then
-								echo Hora >> ~/.guarangoradio/data/parrilla/$i/$rangoc.mus
+								echo Hora >> ~/.guarangoradio-shell/data/parrilla/$i/$rangoc.mus
 							fi
 
-							cat ~/.guarangoradio/data/parrilla/$i/$rangoc.mus
+							cat ~/.guarangoradio-shell/data/parrilla/$i/$rangoc.mus
 ######
 
 						fi
@@ -289,43 +230,24 @@ i=1
 
 
 
-		cat ~/.guarangoradio/data/parrilla/$dia/$rango.mus
+		cat ~/.guarangoradio-shell/data/parrilla/$dia/$rango.mus
 
              echo listo es $listo
              listo=$(($listo+1)) 
 
 
-	opcion=`/usr/bin/zenity --title="Creación de Parrilla Guarango Radio" --width=400 --height=200 \
-                         --text="Termino la creación de la lista?" \
-                         --list --column="Seleccionar" --column="Si/No" \
-                         --checklist FALSE "Si" FALSE "No" `
- 
- 
+dialog --stdout --title "Parrilla GR" --backtitle "Final?" --yesno "Termino la creación de la lista?" 7 60
+#opcion=`echo $opcion|sed 's/\"//g'` 
+
 if [ $? -eq 0 ]
 then
-        IFS="|"
-        for opcion in $opcion
-        do
-               if [ "$opcion" = "Si" ];
-                     then 
-                      listo=1000
-               elif [ "$opcion" = "No" ]
-                     then
-                      echo "sigue la selección" 
-               fi
-        done
-        IFS=""
-else
-exit   
+listo=1000
 fi
-
-
-
 
 
          done
-fi
-#~/.guarangoradio/bin/guarango-gui.sh
+
+~/.guarangoradio-shell/bin/guarango-gui.sh
 
 
 

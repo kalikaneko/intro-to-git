@@ -21,56 +21,52 @@
 ############################################################################# 
 
 #Interfaz gráfica para guarango radio
- 
-opcion=`/usr/bin/zenity --title="Guarango Radio" --width=210 --height=350 \
-                         --text="Panel de Efectos" \
-                         --list --column="Selección" --column="Reproducir" \
-                         --checklist FALSE "Efecto 1" FALSE "Efecto 2" FALSE "Efecto 3" FALSE "Efecto 4" FALSE "Efecto 5" FALSE "Efecto 6" FALSE "Efecto 7" FALSE "Efecto 8" FALSE "Efecto 9" FALSE "Efecto 10" FALSE "Reproducir Hora" FALSE "Programar Efectos" `
- 
- 
-if [ $? -eq 0 ]
-then
-        IFS="|"
+
+opcion=$(dialog --stdout --checklist  "Guarango Radio Efectos" 50 40 60 1 "Efecto 1" off 2 "Efecto 2" off 3 "Efecto 3" off 4 "Efecto 4" off 5 "Efecto 5" off 6 "Efecto 6" off 7 "Efecto 7" off 8 "Efecto 8" off 9 "Efecto 9" off 10 "Efecto 10" off 11 "Reproducir Hora" off 12 "Programar Efectos" off)
+opcion=`echo $opcion|sed 's/\"//g'` 
+echo $opcion
+
         for opcion in $opcion
         do
-               if [ "$opcion" = "Efecto 1" ];
+               if [ "$opcion" = "1" ];
                      then 
-                      ~/.guarangoradio/data/panel/efecto1.sh &			
-               elif [ "$opcion" = "Efecto 2" ]
+                      ~/.guarangoradio-shell/data/panel/efecto1.sh &			
+               elif [ "$opcion" = "2" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto2.sh &                   
-               elif [ "$opcion" = "Efecto 3" ]
+                      ~/.guarangoradio-shell/data/panel/efecto2.sh &                   
+               elif [ "$opcion" = "3" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto3.sh &
-               elif [ "$opcion" = "Efecto 4" ]
+                      ~/.guarangoradio-shell/data/panel/efecto3.sh &
+               elif [ "$opcion" = "4" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto4.sh &
-               elif [ "$opcion" = "Efecto 5" ]
+                      ~/.guarangoradio-shell/data/panel/efecto4.sh &
+               elif [ "$opcion" = "5" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto5.sh &
-               elif [ "$opcion" = "Efecto 6" ]
+                      ~/.guarangoradio-shell/data/panel/efecto5.sh &
+               elif [ "$opcion" = "6" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto6.sh &
-               elif [ "$opcion" = "Efecto 7" ]
+                      ~/.guarangoradio-shell/data/panel/efecto6.sh &
+               elif [ "$opcion" = "7" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto7.sh &
-               elif [ "$opcion" = "Efecto 8" ]
+                      ~/.guarangoradio-shell/data/panel/efecto7.sh &
+               elif [ "$opcion" = "8" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto8.sh &
-               elif [ "$opcion" = "Efecto 9" ]
+                      ~/.guarangoradio-shell/data/panel/efecto8.sh &
+               elif [ "$opcion" = "9" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto9.sh &
-               elif [ "$opcion" = "Efecto 10" ]
+                      ~/.guarangoradio-shell/data/panel/efecto9.sh &
+               elif [ "$opcion" = "10" ]
                      then
-                      ~/.guarangoradio/data/panel/efecto10.sh &
-               elif [ "$opcion" = "Reproducir Hora" ]
+                      ~/.guarangoradio-shell/data/panel/efecto10.sh &
+               elif [ "$opcion" = "11" ]
                      then
-                      ~/.guarangoradio/data/panel/hora.sh &
-               elif [ "$opcion" = "Programar Efectos" ]
+                      ~/.guarangoradio-shell/data/panel/hora.sh &
+               elif [ "$opcion" = "12" ]
                      then
-                      ~/.guarangoradio/bin/panelprogramar.sh &
+                      ~/.guarangoradio-shell/bin/panelprogramar.sh 
                fi
         done
-        IFS=""
-~/.guarangoradio/bin/panel.sh &       
-fi
+
+~/.guarangoradio-shell/bin/panel.sh 
+exit 
+

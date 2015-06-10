@@ -18,23 +18,8 @@
 # for more details.							    #
 #									    #
 ############################################################################# 
-
-# Establece el editor a usar
-if [ -f /usr/bin/pluma ]
-then
-        EDITOR="pluma"
-elif [ -f /usr/bin/leafpad ]
-then
-        EDITOR="leafpad"
-elif [ -f /usr/bin/mousepad ]
-then
-        EDITOR="mousepad"
-else
-        EDITOR="gedit"
-fi
-
 i=1
-ruta=~/.guarangoradio/data/reporte/parrilla-programada-`date +%Y%m%d`.txt
+ruta=~/.guarangoradio-shell/data/reporte/parrilla-programada-`date +%Y%m%d`.txt
 echo Reporte de pautaje `date +%Y-%m-%d` > $ruta
 echo " " >> $ruta
 echo "Días de la semana; 1=lunes 2=martes 3=miércoles ...... 7=domingo" >> $ruta
@@ -46,15 +31,15 @@ while [ $i -le 7 ]; do
 j=0
 while [ $j -le 23 ]; do
 k=$j-$(($j+1)).mus
-if [ -s ~/.guarangoradio/data/parrilla/$i/$k ]; then
+if [ -s ~/.guarangoradio-shell/data/parrilla/$i/$k ]; then
 
 echo "==Día: `echo $i|sed s/1/lunes/g|sed s/2/martes/g|sed s/3/miércoles/g|sed s/4/jueves/g|sed s/5/viernes/g|sed s/6/sábado/g|sed s/7/domingo/g` ranura:  desde las $j hasta las" $(($j+1)) "horas ==" >> $ruta
-cat ~/.guarangoradio/data/parrilla/$i/$k >> $ruta
+cat ~/.guarangoradio-shell/data/parrilla/$i/$k >> $ruta
 echo " " >> $ruta
 fi
 j=$(($j+1))
 done
 i=$(($i+1))
 done
-$EDITOR $ruta
-#~/.guarangoradio/bin/guarango-gui.sh
+gedit $ruta
+~/.guarangoradio-shell/bin/guarango-gui.sh
