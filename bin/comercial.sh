@@ -19,381 +19,294 @@
 #									    #
 ############################################################################# 
 
-if [[ -s ~/.guarangoradio/bin/Comercial_GR.gambas ]]; then
-	~/.guarangoradio/bin/Comercial_GR.gambas
-else
 
-		listo=0
-		#         while [  $listo -ne 1000 ]; do
+listo=0
+         while [  $listo -ne 1000 ]; do
 
-		#Encera variables
-		iii=0
-		while [ $iii  -le 59 ]; do
-		dia[$iii]=0
-		hr[$iii]=0
-		mn[$iii]=0
-		iii=$(($iii+1))
-		done
-		  
+#Para programar comerciales con fecha inicio fin -- pendiente
 
-		#Para programar comerciales con fecha inicio fin -- pendiente
-		pautaini=$(zenity --calendar --title="Fecha de inicio de pautaje" --date-format=%Y%m%d)
-		if [ $? -ne 0 ]
-		then
-		exit
-		fi
-
-		echo $pautaini
-
-
-		#echo $inicio
-
-		pautafin=$(zenity --calendar --title="Fecha de fin de pautaje" --date-format=%Y%m%d)
-		if [ $? -ne 0 ]
-		then
-		exit
-		fi
-		echo $pautafin
-
-		##########################
-
-		opcion=`/usr/bin/zenity --title="Programación de Comerciales Guarango Radio" --width=400 --height=300 \
-				         --text="Seleccione los día" \
-				         --list --column="Seleccionar" --column="Día" \
-					 --checklist --multiple  TRUE "Lunes" TRUE "Martes" TRUE "Miércoles" TRUE "Jueves" TRUE "Viernes" TRUE "Sábado" TRUE "Domingo" `
-		 
-
-
-		if [ $? -eq 0 ]
-		then
-			IFS="|"
-			for opcion in $opcion
+pautaini=$(dialog --stdout --title "Fecha de Inicio" --calendar "Seleccione una fecha" 0 0 )
+			IFS="/"
+			n=0
+			for WORD in $pautaini
 			do
-			       if [ "$opcion" = "Lunes" ];
-				     then 
-				      dia[1]=1
-			       elif [ "$opcion" = "Martes" ]
-				     then
-				      dia[2]=2
-			      elif [ "$opcion" = "Miércoles" ]
-				     then
-				      dia[3]=3
-				     
-			     elif [ "$opcion" = "Jueves" ]
-				     then
-				      dia[4]=4
-
-			     elif [ "$opcion" = "Viernes" ]
-				     then
-				      dia[5]=5
-
-			     elif [ "$opcion" = "Sábado" ]
-				     then
-				      dia[6]=6
-		 
-			     elif [ "$opcion" = "Domingo" ]
-				     then
-				      dia[7]=7
-		 
-		 
-			       fi
+			data[$n]=$WORD
+			n=$(($n+1))
 			done
 			IFS=" "
-		else
-		exit       
-		fi
-		diasemite=${dia[1]}${dia[2]}${dia[3]}${dia[4]}${dia[5]}${dia[6]}${dia[7]}
-		echo $diasemite
 
-		opcion=`/usr/bin/zenity --title="Programación de Comerciales Guarango Radio" --width=400 --height=600 \
-				         --text="Seleccione las horas" \
-				         --list --column="Seleccionar" --column="Rango de Hora" \
-				         --checklist --multiple FALSE "00" FALSE "01" FALSE "02" FALSE "03" FALSE "04" FALSE "05" FALSE "06" FALSE "07" FALSE "08" FALSE "09" FALSE "10" FALSE "11" FALSE "12" FALSE "13" FALSE "14" FALSE "15" FALSE "16" FALSE "17" FALSE "18" FALSE "19" FALSE "20" FALSE "21" FALSE "22" FALSE "23" `
-		 
+pautaini=${data[2]}${data[1]}${data[0]}
+#echo $pautaini
 
-
-
-		if [ $? -eq 0 ]
-		then
-			IFS="|"
-			for opcion in $opcion
+pautafin=$(dialog --stdout --title "Fecha de Finalizacion" --calendar "Seleccione una fecha" 0 0 )
+			IFS="/"
+			n=0
+			for WORD in $pautafin
 			do
-			       if [ "$opcion" = "00" ];
-				     then 
-				      hr[0]=1
-			       elif [ "$opcion" = "01" ]
-				     then
-				      hr[1]=1
-			      
-			       elif [ "$opcion" = "02" ]
-				     then
-				      hr[2]=1
-		 
-			       elif [ "$opcion" = "03" ]
-				     then
-				      hr[3]=1
-
-			       elif [ "$opcion" = "04" ]
-				     then
-				      hr[4]=1
-
-			       elif [ "$opcion" = "05" ]
-				     then
-				      hr[5]=1
-
-
-			       elif [ "$opcion" = "06" ]
-				     then
-				      hr[6]=1
-
-
-			       elif [ "$opcion" = "07" ]
-				     then
-				      hr[7]=1
-
-
-			       elif [ "$opcion" = "08" ]
-				     then
-				      hr[8]=1
-
-
-			       elif [ "$opcion" = "09" ]
-				     then
-				      hr[9]=1
-
-
-			       elif [ "$opcion" = "10" ]
-				     then
-				      hr[10]=1
-
-
-			       elif [ "$opcion" = "11" ]
-				     then
-				      hr[11]=1
-
-
-			       elif [ "$opcion" = "12" ]
-				     then
-				      hr[12]=1
-
-
-			       elif [ "$opcion" = "13" ]
-				     then
-				      hr[13]=1
-
-
-			       elif [ "$opcion" = "14" ]
-				     then
-				      hr[14]=1
-
-
-			       elif [ "$opcion" = "15" ]
-				     then
-				      hr[15]=1
-
-
-			       elif [ "$opcion" = "16" ]
-				     then
-				      hr[16]=1
-
-
-			       elif [ "$opcion" = "17" ]
-				     then
-				      hr[17]=1
-
-
-			       elif [ "$opcion" = "18" ]
-				     then
-				      hr[18]=1
-
-
-			       elif [ "$opcion" = "19" ]
-				     then
-				      hr[19]=1
-
-
-			       elif [ "$opcion" = "20" ]
-				     then
-				      hr[20]=1
-
-
-			       elif [ "$opcion" = "21" ]
-				     then
-				      hr[21]=1
-
-
-			       elif [ "$opcion" = "22" ]
-				     then
-				      hr[22]=1
-
-
-			       elif [ "$opcion" = "23" ]
-				     then
-				      hr[23]=1
-
-
-
-			       fi
+			data[$n]=$WORD
+			n=$(($n+1))
 			done
 			IFS=" "
-		else
-		exit      
-		fi
 
-		opcion=`/usr/bin/zenity --title="Programación de Comerciales Guarango Radio" --width=400 --height=600 \
-				         --text="Seleccione los minutos" \
-				         --list --column="Seleccionar" --column="Minuto de reproducción" \
-				         --checklist --multiple FALSE "00" FALSE "05" FALSE "10" FALSE "15" FALSE "20" FALSE "25" FALSE "30" FALSE "35" FALSE "40" FALSE "45" FALSE "50" FALSE "55" `
-		 
-		 
-		if [ $? -eq 0 ]
-		then
-			IFS="|"
-			for opcion in $opcion
-			do
-			       if [ "$opcion" = "00" ];
-				     then 
-				      mn[0]=1
-			       elif [ "$opcion" = "05" ]
-				     then
-				      mn[5]=1
-			      
-			       elif [ "$opcion" = "10" ]
-				     then
-				      mn[10]=1
-		 
-			       elif [ "$opcion" = "15" ]
-				     then
-				      mn[15]=1
+pautafin=${data[2]}${data[1]}${data[0]}
 
-			       elif [ "$opcion" = "20" ]
-				     then
-				      mn[20]=1
+#echo $pautafin
 
-			       elif [ "$opcion" = "25" ]
-				     then
-				      mn[25]=1
+##########################
+diasemit=$(dialog --stdout --checklist  "Seleccione los días de pautaje" 50 40 40 1 lunes on 2 martes on 3 miércoles on 4 jueves on 5 viernes on 6 sábado on 7 domingo on)
 
-
-			       elif [ "$opcion" = "30" ]
-				     then
-				      mn[30]=1
-
-
-			       elif [ "$opcion" = "35" ]
-				     then
-				      mn[35]=1
-
-
-			       elif [ "$opcion" = "40" ]
-				     then
-				      mn[40]=1
-
-			       elif [ "$opcion" = "45" ]
-				     then
-				      mn[45]=1
-
-			       elif [ "$opcion" = "50" ]
-				     then
-				      mn[50]=1
-
-			       elif [ "$opcion" = "55" ]
-				     then
-				      mn[55]=1
-
-			       fi
-			done
-			IFS=" "
-		else
-		exit       
-		fi
+diasemite=`echo $diasemit|sed 's/\ //g'|sed 's/\"//g'`
 
 
 
-		usuario=`whoami`
+opcionaa=$(dialog --stdout --checklist  "Seleccione la Horas de Pautaje" 50 40 60 0 0:00 off 1 01:00 off 2 02:00 off 3 03:00 off 4 04:00 off 5 05:00 on 6 06:00 on 7 07:00 on 8 08:00 on 9 09:00 on 10 10:00 on 11 11:00 on 12 12:00 on 13 13:00 on 14 14:00 on 15 15:00 on 16 16:00 on 17 17:00 on 18 18:00 on 19 19:00 on 20 20:00 on 21 21:00 off 22 22:00 off 23 23:00 off)
 
-		       comercial=`zenity --filename=/home/$usuario/Guarango\ Radio/comerciales/ --file-selection --title="Seleccione el archivo de audio a ser programado"` 
+opcion=`echo $opcionaa|sed 's/\"//g'`
+echo $opcion
 
-		if [ $? -eq 0 ]
-		then
-			case $? in
-				 0)
-				        echo "\"$comercial\" seleccionado.";;
-				 1)
-				        echo "No ha seleccionado ningún archivo.";;
-				-1)
-				        echo "No ha seleccionado ningún archivo.";;
-			esac
-		#########################
+        for opcion in $opcion
+        do
+               if [ "$opcion" = "0" ];
+                     then 
+                      hr[0]=1
+               elif [ "$opcion" = "1" ]
+                     then
+                      hr[1]=1
+              
+               elif [ "$opcion" = "2" ]
+                     then
+                      hr[2]=1
+ 
+               elif [ "$opcion" = "3" ]
+                     then
+                      hr[3]=1
 
-			i=0
-				 while [  $i -le 23 ]; do     
+               elif [ "$opcion" = "4" ]
+                     then
+                      hr[4]=1
 
-			j=0
-				 while [  $j -le 55 ]; do				     
+               elif [ "$opcion" = "5" ]
+                     then
+                      hr[5]=1
 
-		#		hora=${hr[$i]}
-					if [[ ${hr[$i]} -eq "1" ]]; then
-		#		minuto=${mn[$j]}
-						if [[  ${mn[$j]} -eq "1" ]]; then
 
-							vacio=1
-							if [ -s ~/.guarangoradio/data/comerciales/$i/$j.com ]; then
-							vacio=0
-							fi
-				
-							if [ $vacio = 1 ]; then
-							echo "$comercial""|"$diasemite"|"$pautaini"|"$pautafin > ~/.guarangoradio/data/comerciales/$i/$j.com
-							echo primera linea
-							else
-							echo "$comercial""|"$diasemite"|"$pautaini"|"$pautafin >> ~/.guarangoradio/data/comerciales/$i/$j.com
-							echo segunda linea
-							fi
-						#sed '/^$/d' ~/.guarangoradio/data/comerciales/$i/$j.com > ~/.guarangoradio/data/comerciales/$i/$j.com
-						echo $comercial
-						fi
+               elif [ "$opcion" = "6" ]
+                     then
+                      hr[6]=1
+
+
+               elif [ "$opcion" = "7" ]
+                     then
+                      hr[7]=1
+
+
+               elif [ "$opcion" = "8" ]
+                     then
+                      hr[8]=1
+
+
+               elif [ "$opcion" = "9" ]
+                     then
+                      hr[9]=1
+
+
+               elif [ "$opcion" = "10" ]
+                     then
+                      hr[10]=1
+
+
+               elif [ "$opcion" = "11" ]
+                     then
+                      hr[11]=1
+
+
+               elif [ "$opcion" = "12" ]
+                     then
+                      hr[12]=1
+
+
+               elif [ "$opcion" = "13" ]
+                     then
+                      hr[13]=1
+
+
+               elif [ "$opcion" = "14" ]
+                     then
+                      hr[14]=1
+
+
+               elif [ "$opcion" = "15" ]
+                     then
+                      hr[15]=1
+
+
+               elif [ "$opcion" = "16" ]
+                     then
+                      hr[16]=1
+
+
+               elif [ "$opcion" = "17" ]
+                     then
+                      hr[17]=1
+
+
+               elif [ "$opcion" = "18" ]
+                     then
+                      hr[18]=1
+
+
+               elif [ "$opcion" = "19" ]
+                     then
+                      hr[19]=1
+
+
+               elif [ "$opcion" = "20" ]
+                     then
+                      hr[20]=1
+
+
+               elif [ "$opcion" = "21" ]
+                     then
+                      hr[21]=1
+
+
+               elif [ "$opcion" = "22" ]
+                     then
+                      hr[22]=1
+
+
+               elif [ "$opcion" = "23" ]
+                     then
+                      hr[23]=1
+
+
+
+               fi
+        done
+        
+       
+echo $diasemite
+
+
+opcionmm=$(dialog --stdout --checklist  "Seleccione los minutos de reproducción" 50 40 60 0 "00 minutos" off 5 "05 minutos" 0ff 10 "10 minutos" off 15 "15 minutos" off 20 "20 minutos" off 25 "25 minutos" off 30 "30 minutos" off 35 "35  minutos" off 40 "40 minutos" off 45 "45 minutos" off 50 "50 minutos" off 55 "55 minutos" off )
+
+opcion=`echo $opcionmm|sed 's/\"//g'`
+      
+        for opcion in $opcion
+        do
+               if [ "$opcion" = "0" ];
+                     then 
+                      mn[0]=1
+               elif [ "$opcion" = "5" ]
+                     then
+                      mn[5]=1
+              
+               elif [ "$opcion" = "10" ]
+                     then
+                      mn[10]=1
+ 
+               elif [ "$opcion" = "15" ]
+                     then
+                      mn[15]=1
+
+               elif [ "$opcion" = "20" ]
+                     then
+                      mn[20]=1
+
+               elif [ "$opcion" = "25" ]
+                     then
+                      mn[25]=1
+
+
+               elif [ "$opcion" = "30" ]
+                     then
+                      mn[30]=1
+
+
+               elif [ "$opcion" = "35" ]
+                     then
+                      mn[35]=1
+
+
+               elif [ "$opcion" = "40" ]
+                     then
+                      mn[40]=1
+
+               elif [ "$opcion" = "45" ]
+                     then
+                      mn[45]=1
+
+               elif [ "$opcion" = "50" ]
+                     then
+                      mn[50]=1
+
+               elif [ "$opcion" = "55" ]
+                     then
+                      mn[55]=1
+
+               fi
+        done
+#echo "0:"${mn[0]} "5:"${mn[5]} "10:"${mn[10]} "15:"${mn[15]} "20:"${mn[20]} "25:"${mn[25]} "30:"${mn[30]}
+
+
+comercial=$(dialog --stdout --title "Seleccione el Comercial" --fselect $HOME/ 0 14 48)
+
+echo $comercial
+
+#########################
+
+	i=0
+		 while [  $i -le 23 ]; do     
+
+	j=0
+		 while [  $j -le 55 ]; do				     
+
+#		hora=${hr[$i]}
+			if [[ ${hr[$i]} -eq "1" ]]; then
+#		minuto=${mn[$j]}
+				if [[  ${mn[$j]} -eq "1" ]]; then
+
+					vacio=1
+					if [ -s ~/.guarangoradio-shell/data/comerciales/$i/$j.com ]; then
+					vacio=0
 					fi
-					j=$(($j+5))				
-				done
+				
+					if [ $vacio = 1 ]; then
+					echo "$comercial""|"$diasemite"|"$pautaini"|"$pautafin > ~/.guarangoradio-shell/data/comerciales/$i/$j.com
+					echo primera linea
+					else
+					echo "$comercial""|"$diasemite"|"$pautaini"|"$pautafin >> ~/.guarangoradio-shell/data/comerciales/$i/$j.com
+					echo segunda linea
+					fi
+				#sed '/^$/d' ~/.guarangoradio-shell/data/comerciales/$i/$j.com > ~/.guarangoradio-shell/data/comerciales/$i/$j.com
+				echo $comercial
+				fi
+			fi
+			j=$(($j+5))				
+		done
 	
-				     i=$(($i+1)) 
-				 done
+		     i=$(($i+1)) 
+		 done
 
 
 		
-			     
-		echo listo es $listo
-			     listo=$(($listo+1)) 
+             
+echo listo es $listo
+             listo=$(($listo+1)) 
 
-		else
-		exit       
-		fi
+dialog --stdout --title "Termino de programar los comerciales?" --backtitle "Cerrar Programación Comerciales" --yesno "Termino de programar los comerciales?" 7 60
+#opcion=`echo $opcion|sed 's/\"//g'` 
 
-		#opcion=`/usr/bin/zenity --title="Programación de Comerciales Guarango Radio" --width=400 --height=200 \
-		#                         --text="Termino la programación de comerciales?" \
-		#                         --list --column="Seleccionar" --column="Si/No" \
-		#                         --checklist FALSE "Si" FALSE "No" `
-		 
-		 
-		#if [ $? -eq 0 ]
-		#then
-		#        IFS="|"
-		#        for opcion in $opcion
-		#        do
-		#               if [ "$opcion" = "Si" ];
-		#                     then 
-		#                      listo=1000		      
-		#               elif [ "$opcion" = "No" ]
-		#                     then
-		#                      echo "sigue la selección" 
-		#               fi
-		#        done
-			IFS=" "
-		#else
-		#exit       
-		#fi
-		#         done
-		#~/.guarangoradio/bin/guarango-gui.sh
+if [ $? -eq 0 ]
+then
+~/.guarangoradio-shell/bin/guarango-gui.sh
+exit
 fi
-exit 0
+
+
+
+
+
+         done
+~/.guarangoradio-shell/bin/guarango-gui.sh
 

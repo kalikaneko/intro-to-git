@@ -18,24 +18,8 @@
 # for more details.							    #
 #									    #
 ############################################################################# 
-
-
-# Establece el editor a usar
-if [ -f /usr/bin/pluma ]
-then
-        EDITOR="pluma"
-elif [ -f /usr/bin/leafpad ]
-then
-        EDITOR="leafpad"
-elif [ -f /usr/bin/mousepad ]
-then
-        EDITOR="mousepad"
-else
-        EDITOR="gedit"
-fi
-
 i=0 
-ruta=~/.guarangoradio/data/reporte/pautaje-`date +%Y%m%d`.txt
+ruta=~/.guarangoradio-shell/data/reporte/pautaje-`date +%Y%m%d`.txt
 echo Reporte de pautaje `date +%Y-%m-%d` > $ruta
 echo " " >> $ruta
 echo Formato":" Comercial"|"Días de la semana"|"Fecha inicio"|"Fecha fin >> $ruta
@@ -46,14 +30,14 @@ echo " " >> $ruta
 while [ $i -le 23 ]; do
 j=0
 while [ $j -le 59 ]; do
-if [ -s ~/.guarangoradio/data/comerciales/$i/$j.com ]; then
+if [ -s ~/.guarangoradio-shell/data/comerciales/$i/$j.com ]; then
 echo "==$i horas $j minutos==" >> $ruta
-cat ~/.guarangoradio/data/comerciales/$i/$j.com >> $ruta
+cat ~/.guarangoradio-shell/data/comerciales/$i/$j.com >> $ruta
 echo " " >> $ruta
 fi
 j=$(($j+1))
 done
 i=$(($i+1))
 done
-$EDITOR $ruta
-#~/.guarangoradio/bin/guarango-gui.sh
+gedit $ruta
+~/.guarangoradio-shell/bin/guarango-gui.sh

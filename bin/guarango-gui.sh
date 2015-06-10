@@ -22,66 +22,62 @@
 
 #Interfaz gráfica para guarango radio
  
- 
- 
-opcion=`/usr/bin/zenity --title="Guarango Radio -v:alfalfa" --width=400 --height=350 \
-                         --text="Seleccione la acción" \
-                         --list --column="Seleccionar" --column="Acción" \
-			 --checklist FALSE "Ejecutar Guarango Radio" FALSE "Detener Guarango Radio" FALSE "Programar Comerciales" FALSE "Borrar Comerciales" FALSE "Programar Parrilla de Programación" FALSE "Abrir Panel de Efectos" FALSE "Reporte de audios emitidos" FALSE "Reporte de pautaje de comerciales" FALSE "Reporte de parrilla programada"`
- 
- 
-if [ $? -eq 0 ]
-then
-        IFS="|"
+ opcion=$(dialog --stdout --checklist  "Guarango Radio -v:alfalfa" 50 40 60 1 "Ejecutar Guarango Radio" off 2 "Detener Guarango Radio" off 3 "Programar Comerciales" off 4 "Borrar Comerciales" off 5 "Programar Parrilla de Programación" off 6 "Abrir Panel de Efectos" off 7 "Reporte de audios emitidos" off 8 "Reporte de pautaje de comerciales" off 9 "Reporte de parrilla programada" off)
+
+opcion=`echo $opcion|sed 's/\"//g'`
+
         for opcion in $opcion
         do
-               if [ "$opcion" = "Ejecutar Guarango Radio" ];
+               if [ "$opcion" = "1" ];
                      then 			
-		      ~/.guarangoradio/bin/guarango.sh 
-               elif [ "$opcion" = "Detener Guarango Radio" ]
+		      ~/.guarangoradio-shell/bin/guarango.sh 
+               elif [ "$opcion" = "2" ]
                      then
-			zenity --question --text "Esta seguro que quiere cerrar Guarangoradio"; echo $?
+
+		dialog --title "Cerrar GR" --backtitle "Cerrar GuarangoRadio" --yesno "Esta seguro que quiere cerrar Guarangoradio?" 7 60
+
+			
 		if [ $? = 0 ]; then
-                      kill -9 `cat ~/.guarangoradio/data/pid`
-		      killall -9 smplayer
-		      ~/.guarangoradio/bin/guarango-gui.sh
+                      kill -9 `cat ~/.guarangoradio-shell/data/pid`
+		      killall -9 mpg321
+		      ~/.guarangoradio-shell/bin/guarango-gui.sh
 		fi
 
-	      elif [ "$opcion" = "Programar Comerciales" ]
+	      elif [ "$opcion" = "3" ]
                      then
-                      ~/.guarangoradio/bin/comercial.sh
+                      ~/.guarangoradio-shell/bin/comercial.sh
 
                    
-               elif [ "$opcion" = "Borrar Comerciales" ]
+               elif [ "$opcion" = "4" ]
                      then
-                      ~/.guarangoradio/bin/comercialborrar.sh
+                      ~/.guarangoradio-shell/bin/comercialborrar.sh
 
 
-              elif [ "$opcion" = "Programar Parrilla de Programación" ]
+              elif [ "$opcion" = "5" ]
                      then
-                     ~/.guarangoradio/bin/parrilla.sh
+                     ~/.guarangoradio-shell/bin/parrilla.sh
                      
-              elif [ "$opcion" = "Abrir Panel de Efectos" ]
+              elif [ "$opcion" = "6" ]
                      then
-		      ~/.guarangoradio/bin/guarango-gui.sh &                     
-		      ~/.guarangoradio/bin/panel.sh & 
+		     # ~/.guarangoradio-shell/bin/guarango-gui.sh                      
+		      ~/.guarangoradio-shell/bin/panel.sh 
 		                
 
-	      elif [ "$opcion" = "Reporte de audios emitidos" ]
+	      elif [ "$opcion" = "7" ]
                      then
-                     ~/.guarangoradio/bin/reporte.sh               
+                     ~/.guarangoradio-shell/bin/reporte.sh               
 
-	      elif [ "$opcion" = "Reporte de pautaje de comerciales" ]
+	      elif [ "$opcion" = "8" ]
                      then
-                     ~/.guarangoradio/bin/reportepautaje.sh 
+                     ~/.guarangoradio-shell/bin/reportepautaje.sh 
 
-	      elif [ "$opcion" = "Reporte de parrilla programada" ]
+	      elif [ "$opcion" = "9" ]
                      then
-                     ~/.guarangoradio/bin/reporteparrilla.sh 
+                     ~/.guarangoradio-shell/bin/reporteparrilla.sh 
 
                fi
 
         done
-        IFS=""    
-fi
+
+
 
